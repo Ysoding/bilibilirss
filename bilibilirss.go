@@ -59,7 +59,7 @@ func (b *BiliBiliRss) GetLeaderboard(rid, day, arcType int) (string, error) {
 	data := []rss.RssData{}
 
 	gjson.GetBytes(body, "data.list").ForEach(func(key, value gjson.Result) bool {
-		d := &payload.UpLikeVideo{
+		d := &payload.VideoLeaderBoard{
 			Title:  value.Get("title").String(),
 			Author: value.Get("author").String(),
 			Link:   fmt.Sprintf("https://www.bilibili.com/video/%s", value.Get("bvid").String()),
