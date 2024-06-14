@@ -13,9 +13,9 @@ const Tmpl string = `
 
 {{ range .Items }}
       <item>
-        <title>{{ .Title }}</title>
-        <description>{{ .Desc }}</description>
-        <pubDate>{{ .PubDate }}</pubDate>
+        <title>{{ .Title }}</title>{{ if .Desc }}
+        <description>{{ .Desc }}</description>{{ end }}{{ if .PubDate }}
+        <pubDate>{{ .PubDate }}</pubDate>{{ end }}
         <guid>{{ .Link }}</guid>
         <link>{{ .Link }}</link>
       </item>

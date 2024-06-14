@@ -19,10 +19,22 @@ func NewClient(cookie, uid string) *Client {
 }
 
 func (c *Client) GetUpLikeVideo(uid string) ([]byte, error) {
-	return c.get(fmt.Sprintf("https://api.bilibili.com/x/space/like/video?vmid=%s", uid))
+	return c.get(fmt.Sprintf("https://api.bilibili.com/x/space/like/video?vmid=%s", uid), nil)
 }
 
-func (c *Client) get(url string) ([]byte, error) {
+func (c *Client) GetLeaderboard(rid, day, arcType int) ([]byte, error) {
+	return c.get(fmt.Sprintf(
+		"https://api.bilibili.com/x/web-interface/ranking?jsonp=jsonp&rid=%d&day=%d&type=1&arc_type=%d&callback=__jp0",
+		rid,
+		day,
+		arcType),
+		map[string]string{
+			"Referer": fmt.Sprintf("https://www.bilibili.com/ranking/all/%d/%d/%d", rid, arcType, day),
+		},
+	)
+}
+
+func (c *Client) get(url string, header map[string]string) ([]byte, error) {
 	client := &http.Client{}
 
 	req, err := http.NewRequest(http.MethodGet, url, nil)
@@ -32,6 +44,10 @@ func (c *Client) get(url string) ([]byte, error) {
 
 	if c.cookie != "" {
 		req.Header.Set("Cookie", c.cookie)
+	}
+
+	for k, v := range header {
+		req.Header.Set(k, v)
 	}
 
 	resp, err := client.Do(req)

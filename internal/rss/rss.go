@@ -2,6 +2,7 @@ package rss
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"log"
 	"time"
@@ -46,7 +47,12 @@ func NewRssRender(data []RssData) *RssRender {
 	return r
 }
 
+func (r *RssRender) update() {
+	r.RssDesc = fmt.Sprintf("%s - Made with love by Ysoding(https://github.com/Ysoding/bilibilirss)", r.RssTitle)
+}
+
 func (r *RssRender) Render() string {
+	r.update()
 	t, err := template.New("atom").Parse(temp.Tmpl)
 	if err != nil {
 		log.Fatal(err)

@@ -26,4 +26,5 @@ func main() {
 ```
 
 ## Features
+- 视频排行榜
 - UP 主点赞视频

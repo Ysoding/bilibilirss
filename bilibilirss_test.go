@@ -8,6 +8,6 @@ import (
 
 func TestBasic(t *testing.T) {
 	c := bilibilirss.New("", "")
-	rss, _ := c.GetUpLikeVideo("208259")
+	rss, _ := c.GetLeaderboard(0, 3, 1)
 	t.Log(rss)
 }
